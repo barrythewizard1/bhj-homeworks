@@ -1,3 +1,6 @@
+const taskList = document.getElementById('task-list');
+const inputTask = document.getElementById('new-task');
+
 const addTask = (taskText) => {
     const taskElement = document.createElement('div');
     taskElement.classList.add('task');
@@ -19,5 +22,19 @@ const addTask = (taskText) => {
     taskElement.appendChild(removeButton);
     
     taskList.appendChild(taskElement);
-  };
-  
+};
+
+const addButton = document.getElementById('add-button');
+addButton.addEventListener('click', () => {
+    if (inputTask.value.trim() !== '') {
+        addTask(inputTask.value);
+        inputTask.value = ''; 
+    }
+});
+
+inputTask.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && inputTask.value.trim() !== '') {
+        addTask(inputTask.value);
+        inputTask.value = ''; 
+      }
+  });
