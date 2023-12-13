@@ -5,31 +5,30 @@ const addTask = (taskText) => {
     const taskElement = document.createElement('div');
     taskElement.classList.add('task');
 
-    const taskTitle = document.createElement('div');
-    taskTitle.classList.add('task__title');
-    taskTitle.textContent = taskText;
+    taskElement.innerHTML = `
+        <div class="task__title">${taskText}</div>
+        <a href="#" class="task__remove">&times;</a>
+    `;
 
-    const removeButton = document.createElement('a');
-    removeButton.href = "#";
-    removeButton.classList.add('task__remove');
-    removeButton.innerHTML = '&times;';
-
+    const removeButton = taskElement.querySelector('.task__remove');
     removeButton.addEventListener('click', () => {
         taskList.removeChild(taskElement);
     });
-
-    taskElement.appendChild(taskTitle);
-    taskElement.appendChild(removeButton);
 
     taskList.appendChild(taskElement);
 };
 
 const addButton = document.getElementById('add-button');
-if (addButton) {
-    addButton.addEventListener('click', () => {
-        if (inputTask.value.trim() !== '') {
-            addTask(inputTask.value);
-            inputTask.value = '';
-        }
-    });
-}
+addButton.addEventListener('click', () => {
+    if (inputTask.value.trim() !== '') {
+        addTask(inputTask.value);
+        inputTask.value = '';
+    }
+});
+
+inputTask.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter' && inputTask.value.trim() !== '') {
+        addTask(inputTask.value);
+        inputTask.value = '';
+    }
+});
